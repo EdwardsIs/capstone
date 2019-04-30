@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Larry's Satorial Shop</title>
+		
+		<style>
+			 /* The sidebar menu */
+			.sidenav {
+			  height: 100%; /* Full-height: remove this if you want "auto" height */
+			  width: 200px; /* Set the width of the sidebar */
+			  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+			  z-index: 1; /* Stay on top */
+			  top: 0; /* Stay at the top */
+			  left: 0;
+			  background-color: #111; /* Black */
+			  overflow-x: hidden; /* Disable horizontal scroll */
+			  padding-top: 20px;
+			}
+			
+			/* The navigation menu buttons */
+			.sidenav button {
+			  padding: 6px 8px 6px 16px;
+			  text-decoration: none;
+			  font-size: 25px;
+			  color: #818181;
+			  display: block;
+			  width: 200px;
+			  background-color: gray;
+			  border-radius: 1.5px;
+			  color: black;
+			  border: 0.5px solid gray;
+			  transition-duration: 0.4s;
+			}
+			
+			.sidenav button:hover {
+				background-color: white;
+				
+			}
+			
+			.sidenav .selected {
+				background-color: #d1d1e0;
+			}
+			
+			/* Style page content */
+			.main {
+			  margin-left: 200px; /* Same as the width of the sidebar */
+			  padding: 0px 10px;
+			}
+			
+			/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+			@media screen and (max-height: 450px) {
+			  .sidenav {padding-top: 15px;}
+			  .sidenav button {font-size: 18px;}
+			}
+			
+			/*Table Styling*/
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			
+			th, td {
+				height: 30px;
+			}
+			
+			table {
+				border-spacing: 5px;
+			}
+			
+			.tableHeader {
+				background-color: black;
+				color: white;
+			} 
+			
+			tr.selected {
+				background-color: #3399ff;
+			}
+			
+			/*Customer UI Component Styling*/
+			#custEditor {
+				position: relative;
+				left: 35px;
+				font-size: 22px;
+			}
+			
+			#custEditor input {
+				position: relative;
+				font-size: 22px;
+			}
+			
+			#newCustomer {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#newCustomer:hover {
+				background-color: white;
+			}
+			
+			#newCustomer.selected {
+				background-color: #3399ff;
+			}
+			
+			#saveCustomer {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#saveCustomer:hover {
+				background-color: white;
+			}
+			
+			#clearCustomer {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#clearCustomer:hover {
+				background-color: white;
+			}
+			
+			/*Employee UI Component Styling*/
+			#newEmployee {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#newEmployee:hover {
+				background-color: white;
+			}
+			
+			#newEmployee.selected {
+				background-color: #3399ff;
+			}
+			
+			#employeeEditor {
+				position: relative;
+				left: 35px;
+				font-size: 22px;
+			}
+			
+			#employeeEditor input {
+				position: relative;
+				font-size: 22px;
+			}
+			
+			#saveEmployee {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#saveEmployee:hover {
+				background-color: white;
+			}
+			
+			#clearEmployee {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#clearEmployee:hover {
+				background-color: white;
+			}
+			
+			/* Styling Inventory UI Components */
+			#newInventory {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#newInventory:hover {
+				background-color: white;
+			}
+			
+			#newInventory.selected {
+				background-color: #3399ff;
+			}
+			
+			#inventoryEditor {
+				position: relative;
+				left: 35px;
+				font-size: 22px;
+			}
+			
+			#inventoryEditor input {
+				position: relative;
+				font-size: 22px;
+			}
+			
+			#saveInventory {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#saveInventory:hover {
+				background-color: white;
+			}
+			
+			#clearInventory {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#clearInventory:hover {
+				background-color: white;
+			}
+			
+			/*Transaction Menu Styling*/
+			#transactionEditor {
+				position: relative;
+				left: 250px;
+			}
+			
+			#transactionEditor input{
+				position: relative;
+				font-size: 22px;
+			}
+			
+			#addTransItem {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#addTransItem:hover {
+				background-color: white;
+			}
+			
+			#newTransItem {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#newTransItem:hover {
+				background-color: white;
+			}
+			
+			#newTransItem.selected {
+				background-color: #3399ff;
+			}
+			
+			#transSaveItem {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transSaveItem:hover {
+				background-color: white;
+			}
+			
+			#transClearItem {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transClearItem:hover {
+				background-color: white;
+			}
+			
+			#transFinish {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transFinish:hover {
+				background-color: white;
+			}
+			
+			#transItemConfirmation {
+				background-color: #3399ff;
+				font-size: 18px;
+			}
+			
+			#transactionView {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transactionView:hover {
+				background-color: white;
+			}
+			
+			#transReturn {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transReturn:hover {
+				background-color: white;
+			}
+			
+			#deleteTransaction {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#deleteTransaction:hover {
+				background-color: white;
+			}
+			
+			#transCancel {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			#transCancel:hover {
+				background-color: white;
+			}
+			
+			/*Report UI Styling*/
+			#customerReport {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#customerReport:hover {
+				background-color: white;
+			}
+			
+			#inventoryReport { 
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#inventoryReport:hover {
+				background-color: white;
+			}
+			
+			#transactionReport { 
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#transactionReport:hover {
+				background-color: white;
+			}
+			
+			#commissionReport {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#commissionReport:hover {
+				background-color: white;
+			}
+			
+			#totalReport {
+				margin: 10px;
+				font-size: 20px;
+				background-color: gray;
+				border-radius: 1.5px;
+				color: black;
+				border: 0.5px solid gray;
+				transition-duration: 0.4s;
+			}
+			
+			#totalReport:hover {
+				background-color: white;
+			}
+			
+		</style>
+		
+		<script src="jquery-min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"   integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>
+		
+		<!-- Script for handling switching between interfaces -->
+		<script>
+			var customerInterface = {
+					selectedID: 0,
+					active: false,
+					clear: function() {
+						disableInput();
+						$("#"+this.selectedID).removeClass("selected");
+						this.selectedID = 0;
+						$("#newCustomer").removeClass("selected");
+						$("input").val("");
+					},
+					bindActions: function() {
+						var self = this;
+						$("#newCustomer").click(function() {
+							self.clear();
+							$("#newCustomer").addClass("selected");
+							enableInput();
+						});
+						$("#clearCustomer").click(function() {
+							self.clear();
+						});
+						$("#saveCustomer").click(function() {
+							if ($("#newCustomer").hasClass("selected")) {
+								addCustomer($("#customerName").val(), $("#customerAddress").val(), $("#customerCity").val(), $("#customerState").val(), 
+										$("#customerZip").val(), $("#customerEmail").val(), $("#customerPhone").val());
+								self.clear();
+							} else {
+								// Editing logic
+								if(self.selectedID != 0) {
+									// Editing selected customer
+									updateCustomer(self.selectedID, $("#customerName").val(), $("#customerAddress").val(), $("#customerCity").val(), $("#customerState").val(), 
+											$("#customerZip").val(), $("#customerEmail").val(), $("#customerPhone").val());
+								} else {
+									// Error-Nothing selected to save
+									alert("No customer selected to save", "Error");
+								}
+							}
+						});
+					},
+					init: function() {
+						this.clear();
+						$("#displayArea").show();
+						$("#custEditor").show();
+						$("#newCustomer").show();
+						$("#saveCustomer").show();
+						$("#clearCustomer").show();
+						$("#customers").addClass("selected");
+						getCustomers();
+						this.active = true;
+					},
+					exit: function() {
+						this.clear();
+						$("#newCustomer").hide();
+						$("#saveCustomer").hide();
+						$("#clearCustomer").hide();
+						$("#custEditor").hide();
+						$("#displayArea").text('');
+						$("#displayArea").hide();
+						$("#customers").removeClass("selected");
+					},
+					select: function(id, name, address, city, state, zip, email, phone) {
+						this.clear();
+						this.selectedID = id;
+						$("#"+this.selectedID).addClass("selected");
+						$("#customerName").val(name);
+						$("#customerAddress").val(address);
+						$("#customerCity").val(city);
+						$("#customerState").val(state);
+						$("#customerZip").val(zip);
+						$("#customerEmail").val(email);
+						$("#customerPhone").val(phone);
+						enableInput();
+					}
+			}
+			
+			var employeeInterface = {
+					selectedID: 0,
+					active: false,
+					clear: function() {
+						disableInput();
+						$("#"+this.selectedID).removeClass("selected");
+						this.selectedID = 0;
+						$("#newEmployee").removeClass("selected");
+						$("input").val("");
+					},
+					bindActions: function() {
+						var self = this;
+						$("#newEmployee").click(function() {
+							self.clear();
+							$("#newEmployee").addClass("selected");
+							enableInput();
+						});
+						$("#clearEmployee").click(function() {
+							self.clear();
+						});
+						$("#saveEmployee").click(function() {
+							if ($("#newEmployee").hasClass("selected")) {
+								addEmployee($("#employeeName").val(), $("#employeeAddress").val(), $("#employeeCity").val(), $("#employeeState").val(), 
+										$("#employeeZip").val(), $("#employeeEmail").val(), $("#employeePhone").val());
+								self.clear();
+							} else {
+								// Editing logic
+								if(self.selectedID != 0) {
+									// Editing selected employee
+									updateEmployee(self.selectedID, $("#employeeName").val(), $("#employeeAddress").val(), $("#employeeCity").val(), $("#employeeState").val(), 
+											$("#employeeZip").val(), $("#employeeEmail").val(), $("#employeePhone").val());
+								} else {
+									// Error-Nothing selected to save
+									alert("No employee selected to save", "Error");
+								}
+							}
+						});
+					},
+					init: function() {
+						this.clear();
+						$("#displayArea").show();
+						$("#employeeEditor").show();
+						$("#newEmployee").show();
+						$("#saveEmployee").show();
+						$("#clearEmployee").show();
+						$("#employees").addClass("selected");
+						getEmployees();
+						active = true;
+					},
+					exit: function() {
+						this.clear();
+						$("#newEmployee").hide();
+						$("#saveEmployee").hide();
+						$("#clearEmployee").hide();
+						$("#employeeEditor").hide();
+						$("#displayArea").text('');
+						$("#displayArea").hide();
+						$("#employees").removeClass("selected");
+					},
+					select: function(id, name, address, city, state, zip, email, phone) {
+						this.clear();
+						this.selectedID = id;
+						$("#"+this.selectedID).addClass("selected");
+						$("#employeeName").val(name);
+						$("#employeeAddress").val(address);
+						$("#employeeCity").val(city);
+						$("#employeeState").val(state);
+						$("#employeeZip").val(zip);
+						$("#employeeEmail").val(email);
+						$("#employeePhone").val(phone);
+						enableInput();
+					}
+			}
+		
+			var inventoryInterface = {
+					selectedID: 0,
+					active: false,
+					clear: function() {
+						disableInput();
+						$("#"+this.selectedID).removeClass("selected");
+						this.selectedID = 0;
+						$("#newInventory").removeClass("selected");
+						$("input").val("");
+					},
+					bindActions: function() {
+						var self = this;
+						$("#newInventory").click(function() {
+							self.clear();
+							$("#newInventory").addClass("selected");
+							enableInput();
+						});
+						$("#clearInventory").click(function() {
+							self.clear();
+						});
+						$("#saveInventory").click(function() {
+							// Checking to make sure input is numeric
+							if($.isNumeric($("#inventoryAmount").val()) && $.isNumeric($("#inventoryPrice").val())){
+								// Checking to make sure numbers are within valid range
+								if($("#inventoryAmount").val() >= 0 && $("#inventoryPrice").val() >= 0.01) {
+			
+									if($("#newInventory").hasClass("selected")) {
+										addInventory($("#inventoryName").val(), $("#inventoryAmount").val(), $("#inventorySku").val(), $("#inventoryDescription").val(), 
+												$("#inventoryPrice").val());
+									} else {
+										if(self.selectedID != 0) {
+											updateInventory(self.selectedID, $("#inventoryName").val(), $("#inventoryAmount").val(), $("#inventorySku").val(),
+													$("#inventoryDescription").val(), $("#inventoryPrice").val());
+										} else {
+											alert("Please select an item.", "No Item Selected");
+										}
+									}
+								} else {
+									alert("Enter a number greater than or equal to 0 for amount, and a number greater than or equal to 0.01 for price", "Amount Error");
+								}
+							} else {
+								alert("Enter a numeric value for price and inventory amount", "Type Error");
+							}
+							self.clear();
+						});
+					},
+					init: function() {
+						this.clear();
+						$("#displayArea").show();
+						$("#inventoryEditor").show();
+						$("#newInventory").show();
+						$("#saveInventory").show();
+						$("#clearInventory").show();
+						$("#inventory").addClass("selected");
+						getInventory();
+						active = true;
+					},
+					exit: function() {
+						this.clear();
+						$("#displayArea").text('');
+						$("#displayArea").hide();
+						$("#saveInventory").hide();
+						$("#newInventory").hide();
+						$("#clearInventory").hide();
+						$("#inventoryEditor").hide();
+						$("#inventory").removeClass("selected");
+					},
+					select: function(id, name, amount, sku, description, price) {
+						this.clear();
+						this.selectedID = id;
+						$("#"+this.selectedID).addClass("selected");
+						$("#inventoryName").val(name);
+						$("#inventoryAmount").val(amount);
+						$("#inventorySku").val(sku);
+						$("#inventoryDescription").val(description);
+						$("#inventoryPrice").val(price);
+						enableInput();
+					}
+			}
+			
+			var transactionInterface = {
+					active: false,
+					selectedID: 0,
+					selectedDetailIDs: [],
+					select: function(id) {
+						$("#"+this.selectedID).removeClass("selected");
+						this.selectedID = id;
+						$("#"+this.selectedID).addClass("selected");
+						this.selectedDetailIDs = [];
+						$("#detailDisplay").text('');
+						$("#detailDisplay").show();
+						$("#deleteTransaction").show();
+						getDetailsFor(this.selectedID);
+					},
+					latestHeaderID: 0,
+					setLatestHeaderID: function(id) {
+						this.latestHeaderID = id;
+					},
+					inventory: [],
+					customers: [],
+					employees: [],
+					transactionHeader: {
+						customer: {},
+						employee: {},
+						subtotal_amount: 0,
+						tax_amount: 0
+					},
+					transactionDetails: [],
+					setCustomer: function(id) {
+						console.log('Selected Customer ID: ' + id);
+						// Search for ID
+						var foundID = false;
+						var matching = {};
+						this.customers.forEach(checkID);
+						function checkID(cust) {
+							if (id == cust.id) {
+								foundID = true;
+								matching = cust;
+							}
+						}
+						if (foundID) {
+							// Add matching customer 
+							this.transactionHeader.customer.id = matching.id;
+						} else {
+							// Customer ID not valid - Shouldn't execute
+							alert("Selected customer not valid", "Error");
+						}
+					},
+					setEmployee: function(id) {
+						// Search for ID
+						var foundID = false;
+						var matching = {};
+						this.employees.forEach(checkID);
+						function checkID(emp) {
+							if (id == emp.id) {
+								foundID = true;
+								matching = emp;
+							}
+						}
+						if (foundID) {
+							// Add matching employee 
+							this.transactionHeader.employee.id = matching.id;
+						} else {
+							// Employee ID not valid - Shouldn't execute
+							alert("Selected employee not valid", "Error");
+						}
+					},
+					clear: function() {
+						$("#newTransItem").removeClass("selected");
+						$("input").val("");
+						this.itemID = 0;
+						document.getElementById("transItemSku").value = "none";
+					},
+					bindActions: function() {
+						var self = this;
+						$("#transactionView").click(function() {
+							$("#transactionEditor").hide();
+							getTransactionHeaders();
+							$("#displayArea").show();
+							$("#transReturn").show();
+							$("#transactionView").hide();
+						});
+						$("#transReturn").click(function() {
+							$("#displayArea").text('');
+							$("#displayArea").hide();
+							$("#detailDisplay").text('');
+							$("#detailDisplay").hide();
+							$("#transactionEditor").show();
+							$("#transReturn").hide();
+							$("#transactionView").show();
+							$("#deleteTransaction").hide();
+						});
+						$("#deleteTransaction").click(function() {
+							deleteTransactions(self.selectedDetailIDs, self.selectedID);
+						});
+						$("#transSaveItem").click(function() {
+							console.log("The save handler is happening");
+							if($.isNumeric($("#transItemAmount").val()) && $("#transItemAmount").val() >= 1) {
+								var inventoryItem = self.searchItemID(self.itemID);
+								var quantityToOrder = parseInt($("#transItemAmount").val());
+								if(inventoryItem != null) {
+									// Add a new transaction detail
+									$("#transItemConfirmation").append("Added " + quantityToOrder + " of " + inventoryItem.item_name+"<br>");
+									self.transactionHeader.subtotal_amount += parseFloat(inventoryItem.price * quantityToOrder);
+									self.transactionHeader.tax_amount += parseFloat((inventoryItem.price * quantityToOrder) * 0.0675);
+									$("#transTotals").text("Subtotal: $" + parseFloat(self.transactionHeader.subtotal_amount).toFixed(2) + 
+											" Tax Amount: $" + parseFloat(self.transactionHeader.tax_amount).toFixed(2));
+									self.transactionDetails.push({inventory: {id: inventoryItem.id}, price: inventoryItem.price, quantity: quantityToOrder});
+								} else {
+									alert("Please select a sku", "Error");
+								}
+							} else {
+								alert("Enter a number greater than 0", "Error");
+							}
+							self.clear();
+							console.log("Got to the end of the handler");
+						});
+						$("#transClearItem").click(function() {
+							self.clear();
+						});
+						$("#newTransItem").click(function() {
+							$("#newTransItem").addClass("selected");
+							enableInput();
+						});
+						$("#transFinish").click(function() {
+							if (self.transactionHeader.customer.id >= 1 && self.transactionHeader.employee.id >= 1) {
+								// Changing all monetary values to have only 2 decimal places
+								self.transactionHeader.subtotal_amount = parseFloat(self.transactionHeader.subtotal_amount).toFixed(2);
+								self.transactionHeader.tax_amount = parseFloat(self.transactionHeader.tax_amount).toFixed(2);
+								
+								// Saving transaction header
+								addTransactionHeader(self.transactionHeader);
+								
+								// Emptying all variables-Restarting
+								self.inventory = [];
+								self.customers = [];
+								self.employees = [];
+								self.transactionHeader = {
+										customer: {},
+										employee: {},
+										subtotal_amount: 0,
+										tax_amount: 0
+									};
+								// Clearing selects
+								$("#transCustomer").find("option").remove();
+								$("#transEmployee").find("option").remove();
+								$("#transItemSku").find("option").remove();
+								// Reloading the inventory/customers/employees
+								getEmployeesTrans();
+								getCustomersTrans();
+								getInventoryTrans();
+								// Restarting UI
+								$("#transItemAmount").text('');
+								$("#transItemConfirmation").text('');
+								$("#transTotals").text('');
+								document.getElementById("transItemSku").value="none";
+								document.getElementById("transCustomer").value = "none";
+								document.getElementById("transEmployee").value = "none";
+							} else {
+								alert("Please select an employee and customer", "Error");
+							}
+							
+						});
+						$("#transCancel").click(function() {
+							// Emptying all variables-Restarting
+							self.inventory = [];
+							self.customers = [];
+							self.employees = [];
+							self.transactionHeader = {
+									customer: {},
+									employee: {},
+									subtotal_amount: 0,
+									tax_amount: 0
+								};
+							self.transactionDetails = [];
+							// Clearing selects
+							$("#transCustomer").find("option").remove();
+							$("#transEmployee").find("option").remove();
+							$("#transItemSku").find("option").remove();
+							// Reloading the inventory/customers/employees
+							getEmployeesTrans();
+							getCustomersTrans();
+							getInventoryTrans();
+							// Restarting UI
+							$("#transItemAmount").text('');
+							$("#transItemConfirmation").text('');
+							$("#transTotals").text('');
+							document.getElementById("transItemSku").value="none";
+							document.getElementById("transCustomer").value = "none";
+							document.getElementById("transEmployee").value = "none";
+						});
+					},
+					saveDetails: function() {
+						let self = this;
+						// Processing/adding individual detail records
+						console.log("Running details");
+						console.log("This: ",this);
+						this.transactionDetails.forEach(runDetails);
+						function runDetails(detail) {
+							// Fixing decimal places
+							detail.price = parseFloat(detail.price).toFixed(2);
+							detail.quantity = parseFloat(detail.quantity).toFixed(0);
+							// Adding header ID
+							detail.transactionHeader = {};
+							detail.transactionHeader.id = self.latestHeaderID;
+							
+							// Adding detail to database
+							addTransactionDetail(detail);
+							let item = self.searchItemID(detail.inventory.id);
+							updateInventoryTrans(item.id, item.item_name, item.amount_in_stock-detail.quantity, item.sku, item.description, item.price)
+						}
+						this.transactionDetails = [];
+					},
+					init: function() {
+						enableInput();
+						this.clear();
+						getEmployeesTrans();
+						getCustomersTrans();
+						getInventoryTrans();
+						$("#transactions").addClass("selected");
+						$("#transactionView").show();
+						$("#transactionEditor").show();
+						$("#transItemEditor").show();
+					},
+					exit: function() {
+						// Clearing all variables
+						self.inventory = [];
+						self.customers = [];
+						self.employees = [];
+						self.transactionHeader = {
+								customer: {},
+								employee: {},
+								subtotal_amount: 0,
+								tax_amount: 0
+							};
+						self.transactionDetails = [];
+						self.itemID = 0;
+						// Closing transactions UI
+						$("#transCustomer").find("option").remove();
+						$("#transEmployee").find("option").remove();
+						$("#transItemSku").find("option").remove();
+						$("#transactionEditor").hide();
+						$("#transactionView").hide();
+						$("#transReturn").hide();
+						$("#displayArea").text('');
+						$("#displayArea").hide();
+						$("#detailDisplay").hide();
+						$("#deleteTransaction").hide();
+						document.getElementById("transCustomer").value = "none";
+						document.getElementById("transEmployee").value = "none";
+						document.getElementById("transItemSku").value = "none";
+						$("#transactions").removeClass("selected");
+					},
+					itemID: 0,
+					setItemID: function(id) {
+						this.itemID = id;
+					},
+					searchItemID: function(id) {
+						var foundID = false;
+						var matching = {};
+						this.inventory.forEach(checkID);
+						function checkID(item) {
+							if (id == item.id) {
+								foundID = true;
+								matching = item;
+							}
+						}
+						if (foundID) {
+							// Add matching item 
+							return matching;
+						} else {
+							// Item SKU not valid
+							return null;
+						}
+					}
+			}
+			
+			var reportInterface = {
+				inventory: [],
+				employeeID: 0,
+				employeeName: "",
+				searchItemID: function(id) {
+					var foundID = false;
+					var matching = {};
+					this.inventory.forEach(checkID);
+					function checkID(item) {
+						if (id == item.id) {
+							foundID = true;
+							matching = item;
+						}
+					}
+					if (foundID) {
+						// Add matching item 
+						return matching;
+					} else {
+						// Item SKU not valid
+						return null;
+					}
+				},
+				init: function() {
+					this.employeeID = 0;
+					loadInventoryReport();
+					getEmployeesReport();
+					$("#displayArea").text('');
+					$("#displayArea").show();
+					$("#reportEditor").show();
+					$("#reports").addClass('selected');
+					$("#reportLabel").show();
+				},
+				exit: function() {
+					$("#displayArea").text('');
+					$("#displayArea").hide();
+					$("#reportEditor").hide();
+					$("#reportLabel").hide();
+					$("#reports").removeClass('selected');
+				},
+				bindActions: function() {
+					let self = this;
+					$("#customerReport").click(function() {
+						getCustomersReport();
+					});
+					$("#inventoryReport").click(function() {
+						getInventoryReport();
+					});
+					$("#transactionReport").click(function() {
+						getTransactionHeadersReport();
+					});
+					$("#commissionReport").click(function() {
+						getEmployeeReport();
+					});
+					$("#totalReport").click(function() {
+						getProfitReport();
+					});
+				}
+			}
+			
+			var selectedInterface = reportInterface;
+			
+			let theThis = this;
+			
+			$( document ).ready(function(){
+				//Binding actions
+				theThis.transactionInterface.bindActions();
+				theThis.inventoryInterface.bindActions();
+				theThis.customerInterface.bindActions();
+				theThis.employeeInterface.bindActions();
+				theThis.reportInterface.bindActions();
+				$("#displayArea").hide();
+				$("#detailDisplay").hide();
+				//Hiding editors
+				$("#custEditor").hide();
+				$("#employeeEditor").hide();
+				$("#inventoryEditor").hide();
+				$("#transactionEditor").hide();
+				$("#transItemEditor").hide();
+				//"New" buttons hidden
+				$("#newCustomer").hide();
+				$("#newEmployee").hide();
+				$("#newInventory").hide();
+				//Hiding save/clear buttons
+				$("#saveCustomer").hide();
+				$("#clearCustomer").hide();
+				$("#saveEmployee").hide();
+				$("#clearEmployee").hide();
+				$("#saveInventory").hide();
+				$("#clearInventory").hide();
+				// Hiding special transactions buttons
+				$("#transReturn").hide();
+				$("#deleteTransaction").hide();
+				$("#transactionView").hide();
+				selectedInterface.init();
+				bindActionsMain();
+			});
+
+			function bindActionsMain() {
+				$("#inventory").click(function() {
+					theThis.selectedInterface.exit();
+					theThis.selectedInterface = self.inventoryInterface;
+					console.log("Interface: ",theThis.selectedInterface);
+					theThis.selectedInterface.init();
+				});
+				$("#transactions").click(function() {
+					theThis.selectedInterface.exit();
+					theThis.selectedInterface = self.transactionInterface;
+					theThis.selectedInterface.init();
+				});
+				$("#employees").click(function() {
+					theThis.selectedInterface.exit();
+					theThis.selectedInterface = self.employeeInterface;
+					theThis.selectedInterface.init();
+				});
+				$("#customers").click(function() {
+					theThis.selectedInterface.exit();
+					theThis.selectedInterface = self.customerInterface;
+					theThis.selectedInterface.init();
+				});
+				$("#reports").click(function() {
+					theThis.selectedInterface.exit();
+					theThis.selectedInterface = self.reportInterface;
+					theThis.selectedInterface.init();
+				});
+			}
+			
+			// Function to create readable string from timestamp
+			function stringDate(date) {
+			  	var mm = date.getMonth()+1;
+				mm = (mm<10?"0"+mm:mm);
+				var dd = date.getDate();
+				dd = (dd<10?"0"+dd:dd);
+			  	var hh = date.getHours();
+			  	hh = (hh<10?"0"+hh:hh);
+			  	var min = date.getMinutes();
+			  	min = (min<10?"0"+min:min);
+			  return mm+'/'+dd+'/'+date.getFullYear()+" "+hh+":"+min;
+			}
+			
+			function disableInput() {
+				$("input").prop("disabled", true);
+				$("#saveCustomer").prop("disabled", true);
+				$("#saveEmployee").prop("disabled", true);
+				$("#saveInventory").prop("disabled", true);
+			}
+			
+			function enableInput() {
+				$("input").prop("disabled", false);
+				$("#saveCustomer").prop("disabled", false);
+				$("#saveEmployee").prop("disabled", false);
+				$("#saveInventory").prop("disabled", false);
+			}
+		</script>
+		
+		<!-- Scripts for handling specific table entities -->
+		<script src="customer.js"></script>
+		<script src="employee.js"></script>
+		<script src="inventory.js"></script>
+		<script src="transaction.js"></script>
+		<script src="report.js"></script>
+		
+	</head>
+	
+	<body>
+		<!-- Side Navigation -->
+		<div class="sidenav">
+		  <button id="customers">Customers</button>
+		  <button id="employees">Employees</button>
+		  <button id="inventory">Inventory</button>
+		  <button id="transactions">Transactions</button>
+		  <button id="reports">Reports</button>
+		</div>
+		
+		<div class="main">
+			<h1>Larry's Satorial Shop</h1>
+			<br><br>
+			<h2 id="reportLabel">Reports</h2>
+			<div id="displayArea" style="width: 1600px; height: 300px; overflow-y: scroll; background-color: silver;"></div>
+			<br><br>
+			<div>
+				<button id="newCustomer">New Customer</button>
+				<button id="newEmployee">New Employee</button>
+				<button id="newInventory">New Item</button>
+			</div>
+						<div id="custEditor">
+			<table>
+				<tr>
+					<td><label>Name:</label></td>
+					<td><input id="customerName" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Address:</label></td>
+					<td><input id="customerAddress" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>City:</label></td>
+					<td><input id="customerCity" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>State:</label></td>
+					<td><input id="customerState" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Zip:</label></td>
+					<td><input id="customerZip" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Email:</label></td>
+					<td><input id="customerEmail" type="text"></td>
+				</tr>
+				<tr>
+					<td><label>Phone:</label></td>
+					<td><input id="customerPhone" type="text"></td>
+				</tr>
+			</table>
+			</div>
+			<div id="employeeEditor">
+				<table style='border-collapse: collapse;'>
+					<tr>
+						<td><label>Name:</label></td>
+						<td><input id="employeeName" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Address:</label></td>
+						<td><input id="employeeAddress" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>City:</label></td>
+						<td><input id="employeeCity" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>State:</label></td>
+						<td><input id="employeeState" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Zip:</label></td>
+						<td><input id="employeeZip" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Email:</label></td>
+						<td><input id="employeeEmail" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Phone:</label></td>
+						<td><input id="employeePhone" type="text"></td>
+					</tr>
+				</table>
+			</div>
+			<div id="inventoryEditor">
+				<table style='border-collapse: collapse;'>
+					<tr>
+						<td><label>Name:</label></td>
+						<td><input id="inventoryName" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Amount In Stock:</label></td>
+						<td><input id="inventoryAmount" type="number" min="0"></td>
+					</tr>
+					<tr>
+						<td><label>SKU:</label></td>
+						<td><input id="inventorySku" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Description:</label></td>
+						<td><input id="inventoryDescription" type="text"></td>
+					</tr>
+					<tr>
+						<td><label>Price:</label></td>
+						<td><input id="inventoryPrice" type="number" min="0.01"></td>
+					</tr>
+				</table>
+			</div>
+			<button id="transactionView">View Transactions</button>
+			<div id="transactionEditor">
+				<div id="transSetup">	
+					<div>
+						<h1>Employee Name</h1>&nbsp;
+						<select id="transEmployee">
+							<!-- Will be filled dynamically upon init -->
+						</select>
+					</div>
+					<div>
+						<h1>Customer Name</h1>&nbsp;
+						<select id="transCustomer">
+							<!-- Will be filled dynamically upon init -->
+						</select>
+					</div>
+				</div>
+				<div id="transItemEditor">
+					<h1>Inventory Item</h1>
+					<table>
+						<tr>
+							<td><label>Enter Sku:</labeL></td>
+							<td><select id="transItemSku"></select></td>
+						</tr>
+						<tr>
+							<td><label>Enter Quantity:</labeL></td>
+							<td><input id="transItemAmount" type="number"></td>
+						</tr>
+					</table>
+					<button id="transSaveItem">Add Item</button>&nbsp;<button id="transClearItem">Clear</button>
+					<p id="transItemConfirmation"></p>
+					<div>
+						<button id="transFinish">Finish</button>&nbsp;<button id="transCancel">Cancel</button>
+					</div>
+					<p id="transTotals"></p>
+				</div>
+			</div>
+			<div id="reportEditor">
+				<button id="customerReport">Customer Report</button><br>
+				<button id="inventoryReport">Inventory Report</button><br>
+				<button id="transactionReport">Transaction Report</button><br>
+				<button id="commissionReport">Commission Report</button><br>
+				<button id="totalReport">Total Report</button>
+			</div>
+			<div>
+				<button id="saveCustomer">Save</button>&nbsp;<button id="clearCustomer">Clear</button>
+				<button id="saveEmployee">Save</button>&nbsp;<button id="clearEmployee">Clear</button>
+				<button id="saveInventory">Save</button>&nbsp;<button id="clearInventory">Clear</button>
+				<button id="transReturn">Return</button>
+			</div>
+			<div id="detailDisplay" style="width: 425px; height: 300px; overflow-y: scroll; background-color: silver;"></div>
+			<button id="deleteTransaction">Delete Selected</button>
+		</div>
+	</body>
+</html>

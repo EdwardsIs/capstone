@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Database Listing</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"   integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>
+
+<script>
+
+$( document ).ready(function() {
+	getCustomers();
+	getEmployees();
+	getInventory();
+	getVendors();
+	getTransactionHeaders();
+	getTransactionDetails();
+});
+
+function getCustomers() {
+    $.ajax({
+            type : 'GET',
+            url : './api/customers',
+            contentType : 'application/json; charset=utf-8', dataType : 'json',
+            success : getCustomersSucceeded, error : function(jqXHR, textStatus, errorThrown) {
+                alert("An error occurred while retrieving items","Item Retrieve Error");
+            }
+   });
+}
+function getCustomersSucceeded(response, io) {
+	$('#customerTextArea').append("<table><tr><td style='width: 30px;'>ID</td><td style='width: 221px;'>Name</td><td style='width: 361px;'>Address</td><td style='width: 181px;'>City</td><td style='width: 51px;'>State</td><td style='width: 61px;'>Zip</td><td style='width: 311px;'>Email</td><td style='width: 141px;'>Phone</td></tr>");
+	$.each(response, 
+    		function(index, customer) {
+    			$('#customerTextArea').append("<tr>"+
+    					"<td style='width: 30px;'>"+customer.id+"</td><td style='width: 220px;'>"+customer.customer_name+"</td><td style='width: 360px;'>"+customer.address+"</td><td style='width: 180px;'>"+customer.city+"</td><td style='width: 50px;'>"+customer.state+"</td><td style='width: 60px;'>"+customer.zip+"</td><td style='width: 310px;'>"+customer.email+"</td><td style='width: 140px;'>"+customer.phone+"</td>"
+    					+"</tr></table>");
+    });
+}
+
+function getEmployees() {
+	$.ajax({
+		type : 'GET',
+		url : './api/employees',
+		contentType : 'application/json; charset=utf-8', dataType : 'json',
+		success : getEmployeesSucceeded, error : function(jqXHR, textStatus, errorThrown) {
+            alert("An error occurred while retrieving items","Item Retrieve Error");
+        }
+	});
+}
+
+function getEmployeesSucceeded(response, io) {
+	$("#employeeTextArea").append("<table><tr><td style='width: 24px;'>ID</td><td style='width: 221px;'>Name</td><td style='width: 361px;'>Address</td><td style='width: 181px;'>City</td><td style='width: 51px;'>State</td><td style='width: 61px;'>Zip</td><td style='width: 311px;'>Email</td><td style='width: 141px;'>Phone</td></tr>");
+	$.each(response,
+			function(index, employee){
+				$('#employeeTextArea').append("<tr><td style='width: 24px;'>"+employee.id+"</td><td style='width: 220px;'>"+employee.employee_name+"</td><td style='width: 360px;'>"+employee.address+"</td><td style='width: 180px;'>"+employee.city+"</td><td style='width: 50px;'>"+employee.state+"</td><td style='width: 60px;'>"+employee.zip+"</td><td style='width: 310px;'>"+employee.email+"</td><td style='width: 140px;'>"+employee.phone+"</td>"
+				+"</tr></table>");
+	});
+}
+
+function getInventory() {
+	$.ajax({
+		type : 'GET',
+		url : './api/inventory',
+		contentType : 'application/json; charset=utf-8', dataType : 'json',
+		success : getInventorySucceeded, error : function(jqXHR, textStatus, errorThrown) {
+            alert("An error occurred while retrieving items","Item Retrieve Error");
+        }
+	});
+}
+
+function getInventorySucceeded(response, io) {
+	$('#inventoryTextArea').append("<table><tr><td style='width: 25px;'>ID</td><td style='width: 326px;'>Time Created</td><td style='width: 326px;'>Time Updated</td><td style='width: 211px;'>Name</td><td style='width: 151px;'>Amount in Stock</td><td style='width: 51px;'>SKU</td><td style='width: 321px;'>Description</td><td style='width: 61px;'>Price</td></tr>");
+	$.each(response,
+			function(index, inventory){
+				$('#inventoryTextArea').append("<tr><td style='width: 24px;'>"+inventory.id+"</td><td style='width: 325px;'>"+inventory.time_created+"</td><td style='width: 325px;'>"+inventory.time_updated+"</td><td style='width: 210px;'>"+inventory.item_name+"</td><td style='width: 151px;'>"+inventory.amount_in_stock+"</td><td style='width: 50px;'>"+inventory.sku+"</td><td style='width: 320px;'>"+inventory.description+"</td><td style='width: 60px;'>"+inventory.price+"</td>"
+				+"</tr></table>");
+	});
+}
+
+function getVendors() {
+	$.ajax({
+		type : 'GET',
+		url : './api/vendors',
+		contentType : 'application/json; charset=utf-8', dataType : 'json',
+		success : getVendorsSucceeded, error : function(jqXHR, textStatus, errorThrown) {
+            alert("An error occurred while retrieving items","Item Retrieve Error");
+        }
+	});
+}
+
+function getVendorsSucceeded(response, io) {
+	$("#vendorTextArea").append("<table><tr><td style='width: 25px;'>ID</td><td style='width: 251px;'>Vendor Name</td><td style='width: 321px;'>Address</td><td style='width: 181px;'>City</td><td style='width: 51px;'>State</td><td style='width: 61px;'>Zip</td><td style='width: 322px;'>Email</td><td style='width: 201px;'>Phone</td><td style='width: 211px;'>Contact Person></td></tr>");
+	$.each(response,
+			function(index, vendor){
+				$('#vendorTextArea').append("<tr><td style='width: 24px;'>"+vendor.id+"</td><td style='width: 250px;'>"+vendor.vendor_name+"</td><td style='width: 320px;'>"+vendor.address+"</td><td style='width: 180px;'>"+vendor.city+"</td><td style='width: 50px;'>"+vendor.state+"</td><td style='width: 60px;'>"+vendor.zip+"</td><td style='width: 320px;'>"+vendor.email+"</td><td style='width: 200px;'>"+vendor.phone+"</td><td style='width: 210px;'>"+vendor.contact_person+"</td>"
+				+"</tr></table>");
+	});
+}
+
+function getTransactionHeaders() {
+	$.ajax({
+		type : 'GET',
+		url : './api/transactionHeaders',
+		contentType : 'application/json; charset=utf-8', dataType : 'json',
+		success : getTransactionHeadersSucceeded, error : function(jqXHR, textStatus, errorThrown) {
+            alert("An error occurred while retrieving items","Item Retrieve Error");
+        }
+	});
+}
+
+function getTransactionHeadersSucceeded(response, io) {
+	$("#transactionHeaderTextArea").append("<table><tr><td style='width: 25px;'>ID</td><td style='width: 311px;'>Time Created</td><td style='width: 106px;'>Detail ID</td><td style='width: 106px;'>Customer ID</td><td style='width: 106px;'>Employee ID</td><td style='width: 70px'>Subtotal</td><td style='width: 71px;'>Tax</td></tr>");
+	$.each(response,
+			function(index, transHeader){
+				$('#transactionHeaderTextArea').append("<tr><td style='width: 24px;'>"+transHeader.id+"</td><td style='width: 310px;'>"+transHeader.time_created+"</td><td style='width: 105px;'>"+transHeader.transactionDetails[0].id+"</td><td style='width: 105px;'>"+transHeader.customer.id+"</td><td style='width: 105px;'>"+transHeader.employee.id+"</td><td style='width: 70px;'>"+transHeader.subtotal_amount+"</td><td style='width: 70px'>"+transHeader.tax_amount+"</td>"
+				+"</tr></table>");
+	});
+}
+
+function getTransactionDetails() {
+	$.ajax({
+		type : 'GET',
+		url : './api/transactionDetails',
+		contentType : 'application/json; charset=utf-8', dataType : 'json',
+		success : getTransactionDetailsSucceeded, error : function(jqXHR, textStatus, errorThrown) {
+            alert("An error occurred while retrieving items","Item Retrieve Error");
+        }
+	});
+}
+
+function getTransactionDetailsSucceeded(response, io) {
+	$("#transactionDetailTextArea").append("<table><tr><td style='width: 25px;'>ID</td><td style='width: 311px;'>Time Created</td><td style='width: 106px;'>Inventory ID</td><td style='width: 106px;'>Quantity</td><td style='width: 105px;'>Price</td></tr>");
+	$.each(response,
+			function(index, transDetail){
+				$('#transactionDetailTextArea').append("<tr><td style='width: 24px;'>"+transDetail.id+"</td><td style='width: 310px;'>"+transDetail.time_created+"</td><td style='width: 105px;'>"+transDetail.inventory.id+"</td><td style='width: 105px;'>"+transDetail.quantity+"</td><td style='width: 105px;'>"+transDetail.price+"</td>"
+				+"</tr></table>");
+	});
+}
+
+</script>
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	height: 30px;
+}
+
+table {
+	border-spacing: 5px;
+}
+
+</style>
+</head>
+<body>
+<label style="color: blue;">Customers</label><br>
+<div id="customerTextArea"
+style="background-color: silver;"></div>
+<br><label style="color: blue;">Employees</label><br>
+<div id="employeeTextArea"
+style="background-color: silver;"></div>
+<br><label style="color: blue;">Inventory</label><br>
+<div id="inventoryTextArea"
+style="background-color: silver;"></div>
+<br><label style="color: blue;">Vendors</label><br>
+<div id="vendorTextArea"
+style="background-color: silver;"></div>
+<br><label style="color: blue;">Transaction Headers</label><br>
+<div id="transactionHeaderTextArea"
+style="background-color: silver;"></div>
+<br><label style="color: blue;">Transaction Detail</label><br>
+<div id="transactionDetailTextArea"
+style="background-color: silver;"></div>
+<br>
+<a href="http://localhost:8080/h2-console">Database Console</a>
+<br><br>
+<a href="http://localhost:8080/swagger-ui.html">REST Services Console</a>
+</body>
+</html>
